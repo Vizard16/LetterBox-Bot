@@ -135,7 +135,7 @@ def create_movie_embed(movie_data):
         color=discord.Color.blue()
     )
     embed.set_thumbnail(url=movie_data["poster"])
-    embed.add_field(name="Directors", value=", ".join(movie_data["directors"]), inline=False)
+   
     # Add fields for rating, director, runtime, and genres
     embed.add_field(name=":star: User Rating", value=str(movie_data["rating"]), inline=True)
     
