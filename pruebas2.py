@@ -22,6 +22,18 @@ def fetch_poster_url(movie_url):
 def fetch_movie_description(movie_instance):
     return movie.movie_description(movie_instance)
 
+
+def fetch_movie_details(movie_instance):
+    details = movie.movie_details(movie_instance)
+    print(f"Type of details: {type(details)}")  # Add this line
+    details_str = ""
+    if isinstance(details, dict):
+        if 'Country' in details:
+            details_str += f"**Country**: {', '.join(details['Country'])}\n"
+        if 'Language' in details:
+            details_str += f"**Language**: {', '.join(details['Language'])}\n"
+    return details_str
+
 # Function to fetch popular reviews for a movie
 def fetch_popular_reviews(movie_instance):
     return movie.movie_popular_reviews(movie_instance)
