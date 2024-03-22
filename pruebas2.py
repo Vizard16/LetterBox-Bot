@@ -36,6 +36,41 @@ def fetch_movie_runtime(movie_url):
         runtime = runtime_text.split("\n")[0].strip()
         return runtime
     return "N/A"  # Return N/A if runtime not found
+
+def get_movie_info(movie_title):
+    # Capitalize the first letter of each word in the movie title
+    movie_title = movie_title.title()
+    
+    # Create a movie instance
+    movie_instance = movie.Movie(movie_title)
+
+    # Fetch the poster URL for the movie
+    poster_url = fetch_poster_url(movie_instance.url)
+
+    description = fetch_movie_description(movie_instance)
+
+    # Fetch popular reviews for the movie
+    reviews = fetch_popular_reviews(movie_instance)
+
+    # Fetch runtime for the movie
+    runtime = fetch_movie_runtime(movie_instance.url)
+
+    # Construct the movie data dictionary
+    movie_data = {
+        "title": movie_instance.title,
+        "url": movie_instance.url,
+        "directors": movie_instance.directors,
+        "rating": movie_instance.rating,
+        "year": movie_instance.year,
+        "genres": movie_instance.genres,
+        "poster": poster_url,
+        "description": description,
+        "popular_reviews": reviews,  # Add popular reviews to movie data
+        "runtime": runtime  # Add runtime to movie data
+    }
+
+    return movie_data
+
 def create_movie_embed(movie_data):
     # Capitalize the first letter of the first word in the movie title and replace hyphens with spaces
     title = movie_data["title"].capitalize().replace("-", " ")
