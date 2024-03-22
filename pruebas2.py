@@ -110,6 +110,8 @@ def get_movie_info(movie_title):
 
     return movie_data
 
+
+
 def create_movie_embed(movie_data):
     # Capitalize the first letter of the first word in the movie title and replace hyphens with spaces
     title = movie_data["title"].capitalize().replace("-", " ")
