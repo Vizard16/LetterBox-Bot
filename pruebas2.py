@@ -141,6 +141,20 @@ def create_movie_embed(movie_data):
     
     embed.add_field(name=":alarm_clock: Runtime", value=movie_data["runtime"], inline=True)
 
+    embed.add_field(name="Directors", value=", ".join(movie_data["directors"]), inline=True)
+
+
+    embed.add_field(name="Genres", value=", ".join(movie_data["genres"]), inline=True)
+
+    embed.add_field(name="Language", value=movie_data["language"].split(", ")[0], inline=True)
+
+    embed.add_field(name="Country", value=movie_data["country"], inline=True)
+
+    embed.add_field(name="Year", value=movie_data["year"], inline=True)
+    
+        # Add country and language details to the embedded message
+    #embed.add_field(name="Details", value=movie_data["details"], inline=True)
+    
     # Add the description field
     embed.add_field(name="Description", value=movie_data["description"], inline=False)
 
