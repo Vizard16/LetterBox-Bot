@@ -92,6 +92,14 @@ def get_movie_info(movie_title):
     # Fetch runtime for the movie
     runtime = fetch_movie_runtime(movie_instance.url)
 
+     # Fetch details like country and language
+    details = movie.movie_details(movie_instance)
+
+    country = ', '.join(details.get('Country', ['N/A']))
+    language = ', '.join(details.get('Language', ['N/A']))
+
+    
+
     # Construct the movie data dictionary
     movie_data = {
         "title": movie_instance.title,
