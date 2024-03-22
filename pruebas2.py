@@ -103,7 +103,9 @@ def get_movie_info(movie_title):
         "poster": poster_url,
         "description": description,
         "popular_reviews": reviews,  # Add popular reviews to movie data
-        "runtime": runtime  # Add runtime to movie data
+        "runtime": runtime,  # Add runtime to movie data
+        "country": country,  # Add country to movie data
+        "language": language # Add language to movie data
     }
 
     return movie_data
