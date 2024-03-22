@@ -18,6 +18,31 @@ def fetch_poster_url(movie_url):
     json_obj = json.loads(script_w_data.text.split(' */')[1].split('/* ]]>')[0])
     return json_obj['image']
 
+def fetch_trailer_url(movie_url):
+    # Make a GET request to the movie URL
+    response = requests.get(movie_url)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the HTML content
+        soup = bs(response.content, 'html.parser')
+        
+        # Find the anchor tag with class 'play' inside which the trailer URL is located
+        trailer_tag = soup.find('a', class_='play')
+        
+        # Check if the trailer tag is found
+        if trailer_tag:
+            # Get the value of the 'href' attribute, which contains the trailer URL
+            trailer_url = trailer_tag.get('href')
+            
+            # Modify the URL to include the protocol 'https:'
+            trailer_url = f"https:{trailer_url}"
+            
+            return trailer_url
+    
+    # Return None if the trailer URL is not found or there was an error
+    return None
+
 # Function to fetch movie description
 def fetch_movie_description(movie_instance):
     return movie.movie_description(movie_instance)
