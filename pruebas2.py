@@ -9,6 +9,21 @@ from letterboxdpy import movie
 
 
 logger = settings.logging.getLogger("bot")
+
+def fetch_backdrop_image(movie_url):
+    r = requests.get(movie_url)
+    if r.status_code == 200:
+        html_content = r.text
+        soup = bs(html_content, 'html.parser')
+        backdrop_element = soup.find("div", class_="backdrop-wrapper")
+        if backdrop_element:
+            # Extract the image URL from the data-backdrop attribute
+            image_url = backdrop_element.get("data-backdrop")
+            return image_url
+    return None
+
+
+
 def run():
     intents = discord.Intents.default()
     intents.message_content = True
