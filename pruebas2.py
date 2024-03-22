@@ -210,7 +210,15 @@ def run():
         """Fetches information about a movie"""
         movie_data = get_movie_info(movie_title)
         embed = create_movie_embed(movie_data)
-        await ctx.send(embed=embed)
+
+        # Fetch the trailer URL
+        trailer_url = fetch_trailer_url(movie_data['url'])
+
+        view = discord.ui.View()
+        button = discord.ui.Button(label="Watch Trailer", url=trailer_url)
+        view.add_item(button)
+        await ctx.send(embed=embed, view=view)
+
 
     bot.run(settings.DISCORD_API_SECRET, root_logger=True)
 
