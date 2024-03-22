@@ -74,6 +74,8 @@ def fetch_movie_runtime(movie_url):
         return runtime
     return "N/A"  # Return N/A if runtime not found
 
+
+
 def get_movie_info(movie_title):
     # Capitalize the first letter of each word in the movie title
     movie_title = movie_title.title()
@@ -158,8 +160,11 @@ def create_movie_embed(movie_data):
     # Add the description field
     embed.add_field(name="Description", value=movie_data["description"], inline=False)
 
+    
+
     # Add the random review to the embedded message
     embed.add_field(name=f"Random Review by {random_review['reviewer']}", value=f"Rating: {random_review['rating']}\nReview: {random_review['review']}", inline=False)
+
 
     # Fetch the image URL from the website
     image_url = fetch_backdrop_image(movie_data["url"])
