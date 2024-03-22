@@ -140,7 +140,6 @@ def create_movie_embed(movie_data):
     embed.add_field(name=":star: User Rating", value=str(movie_data["rating"]), inline=True)
     
     embed.add_field(name=":alarm_clock: Runtime", value=movie_data["runtime"], inline=True)
-    embed.add_field(name="Genres", value=", ".join(movie_data["genres"]), inline=False)
 
     # Add the description field
     embed.add_field(name="Description", value=movie_data["description"], inline=False)
