@@ -10,6 +10,42 @@ from letterboxdpy import movie
 
 logger = settings.logging.getLogger("bot")
 
+def create_movie_embed(movie_data):
+    # Capitalize the first letter of the first word in the movie title and replace hyphens with spaces
+    title = movie_data["title"].capitalize().replace("-", " ")
+    
+    # Randomly select a popular review
+    random_review = random.choice(movie_data["popular_reviews"])
+    
+    # Create an embedded message with movie data and the random review
+    embed = discord.Embed(
+        title=title,
+        url=movie_data["url"],
+        description=" ",
+        color=discord.Color.blue()
+    )
+    embed.set_thumbnail(url=movie_data["poster"])
+    embed.add_field(name="Directors", value=", ".join(movie_data["directors"]), inline=False)
+    # Add fields for rating, director, runtime, and genres
+    embed.add_field(name=":star: User Rating", value=str(movie_data["rating"]), inline=True)
+    
+    embed.add_field(name=":alarm_clock: Runtime", value=movie_data["runtime"], inline=True)
+    embed.add_field(name="Genres", value=", ".join(movie_data["genres"]), inline=False)
+
+    # Add the description field
+    embed.add_field(name="Description", value=movie_data["description"], inline=False)
+
+    # Add the random review to the embedded message
+    embed.add_field(name=f"Random Review by {random_review['reviewer']}", value=f"Rating: {random_review['rating']}\nReview: {random_review['review']}", inline=False)
+
+    # Fetch the image URL from the website
+    image_url = fetch_backdrop_image(movie_data["url"])
+    if image_url:
+        # Set the image URL in the embed
+        embed.set_image(url=image_url)
+    
+    return embed
+
 def fetch_backdrop_image(movie_url):
     r = requests.get(movie_url)
     if r.status_code == 200:
