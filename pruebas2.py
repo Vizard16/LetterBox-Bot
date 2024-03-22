@@ -10,6 +10,32 @@ from letterboxdpy import movie
 
 logger = settings.logging.getLogger("bot")
 
+# Function to fetch poster URL from Letterboxd movie page
+def fetch_poster_url(movie_url):
+    r = requests.get(movie_url)
+    soup = bs(r.text, 'html.parser')
+    script_w_data = soup.select_one('script[type="application/ld+json"]')
+    json_obj = json.loads(script_w_data.text.split(' */')[1].split('/* ]]>')[0])
+    return json_obj['image']
+
+# Function to fetch movie description
+def fetch_movie_description(movie_instance):
+    return movie.movie_description(movie_instance)
+
+# Function to fetch popular reviews for a movie
+def fetch_popular_reviews(movie_instance):
+    return movie.movie_popular_reviews(movie_instance)
+
+def fetch_movie_runtime(movie_url):
+    r = requests.get(movie_url)
+    soup = bs(r.text, 'html.parser')
+    runtime_element = soup.find("p", class_="text-link text-footer")
+    if runtime_element:
+        runtime_text = runtime_element.text.strip()
+        # Extract the runtime from the text
+        runtime = runtime_text.split("\n")[0].strip()
+        return runtime
+    return "N/A"  # Return N/A if runtime not found
 def create_movie_embed(movie_data):
     # Capitalize the first letter of the first word in the movie title and replace hyphens with spaces
     title = movie_data["title"].capitalize().replace("-", " ")
